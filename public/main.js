@@ -6,6 +6,7 @@ var canvasApp ={
   }
 };
 
+
 function addUser(user){
   $.ajax({
     url: canvasApp.urls.createUser,
