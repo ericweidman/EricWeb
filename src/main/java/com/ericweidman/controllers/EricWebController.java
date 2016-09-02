@@ -22,12 +22,17 @@ public class EricWebController {
     @RequestMapping(path = "create-user", method = RequestMethod.POST)
     public User createUser(@RequestBody User newUser) throws Exception {
         User user = users.findByUserName(newUser.getUserName());
-        if (user == null) {
+
+        if(newUser.getUserName().equals("")|| newUser.getPasswordHash().equals("")) {
+            throw new Exception("Text fields must not be left blank");
+        }
+        else if (user == null) {
             user = new User(newUser.getUserName(), PasswordStorage.createHash(newUser.getPasswordHash()));
             users.save(user);
             System.out.println("User added.");
             return null;
-        } else {
+        }
+        else {
             throw new Exception("Username already taken");
         }
     }
@@ -35,7 +40,7 @@ public class EricWebController {
     @RequestMapping(path = "login-user", method = RequestMethod.POST)
     public String loginUser(@RequestBody User existingUser, HttpSession session) throws Exception {
         User user = users.findByUserName(existingUser.getUserName());
-        if(existingUser.getPasswordHash() == null || existingUser.getPasswordHash() == null){
+        if(existingUser.getUserName().equals("")  || existingUser.getPasswordHash().equals("")){
             throw new Exception("Username does not exist");
         }
         else if(!PasswordStorage.verifyPassword(existingUser.getPasswordHash(), user.getPasswordHash())){
