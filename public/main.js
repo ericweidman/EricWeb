@@ -1,4 +1,4 @@
-var canvasApp ={
+var ericApp ={
 
   urls:{
 
@@ -9,7 +9,7 @@ var canvasApp ={
 
 function addUser(user){
   $.ajax({
-    url: canvasApp.urls.createUser,
+    url: ericApp.urls.createUser,
     method: "POST",
     contentType: 'application/json; charset=utf-8',
     dataType: 'json',
@@ -32,7 +32,6 @@ $('#userForm').submit(function(event){
   user.passwordHash = $('input[name="newPassword"]').val();
   addUser(user);
   $('.hello').html('');
-  console.log('submitted');
 });
 function grabSessionValue(name) {
   return window.sessionStorage.getItem(name);
